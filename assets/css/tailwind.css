@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=BBH+Bartle&family=BBH+Bogle&family=Farro:wght@300;400;500;700&family=Stack+Sans+Text:wght@200..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=BBH+Bartle&family=BBH+Bogle&family=Farro:wght@300;400;500;700&family=Stack+Sans+Text:wght@200..700&display=swap");
 @import "tailwindcss";
 
 @theme {
-
   --color-dark-shade2: #1f382f;
 }
 
@@ -44,7 +43,6 @@
   font-family: "BBH Bartle", sans-serif;
   font-style: normal;
 }
-
 
 body {
   background-color: #f7f8f6;
@@ -127,9 +125,9 @@ nav {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  background: #0F5132;
+  background: #0f5132;
   /* dark panel bg */
-  border: 1px solid #C9A227;
+  border: 1px solid #c9a227;
   border-radius: 24px;
   list-style: none;
   padding: 0;
@@ -184,8 +182,8 @@ nav {
 
 .dropdown-service-list a:hover,
 .dropdown-service-list a.active {
-  background-color: #C9A227;
-  color: #0F5132;
+  background-color: #c9a227;
+  color: #0f5132;
 }
 
 /* Service icon wrapper */
@@ -245,7 +243,7 @@ nav {
   top: 0;
   right: 0;
   height: 100vh;
-  background: #0F5132;
+  background: #0f5132;
   overflow-y: auto;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -299,11 +297,11 @@ nav {
 }
 
 .mm-close-btn:hover {
-  background: #497B63;
+  background: #497b63;
 }
 
 .mm-close-btn:hover svg * {
-  fill: #C9A227 !important;
+  fill: #c9a227 !important;
 }
 
 /* Nav list */
@@ -332,7 +330,7 @@ nav {
 }
 
 .mm-nav-link:hover {
-  color: #C9A227;
+  color: #c9a227;
   background: rgba(153, 254, 0, 0.04);
 }
 
@@ -344,7 +342,7 @@ nav {
 }
 
 .mm-nav-link:hover .mm-plus {
-  color: #C9A227;
+  color: #c9a227;
 }
 
 /* LET'S CONNECT button at bottom */
@@ -366,7 +364,7 @@ nav {
 }
 
 .mm-connect-btn:hover {
-  background: #C9A227;
+  background: #c9a227;
 }
 
 .mm-connect-btn .mm-arrow {
@@ -418,7 +416,7 @@ nav {
 }
 
 .mm-back-btn:hover {
-  color: #C9A227;
+  color: #c9a227;
 }
 
 .mm-services-title {
@@ -439,7 +437,7 @@ nav {
 .mm-service-card {
   background: transparent;
   border-radius: 12px;
-  border: 1px solid #C9A227;
+  border: 1px solid #c9a227;
   padding: 16px;
   text-decoration: none;
   display: flex;
@@ -452,8 +450,8 @@ nav {
 }
 
 .mm-service-card:hover {
-  border-color: #C9A227;
-  background: #497B63;
+  border-color: #c9a227;
+  background: #497b63;
 }
 
 .mm-service-card .card-label {
@@ -467,7 +465,7 @@ nav {
 }
 
 .mm-service-card:hover .card-label {
-  color: #C9A227;
+  color: #c9a227;
 }
 
 /* Decorative grid lines at bottom (subtle) */
@@ -538,19 +536,19 @@ nav {
 
 #mobile-menu-toggle {
   padding: 8px 16px;
-  background-color: #0F5132;
+  background-color: #0f5132;
   cursor: pointer;
-  border-right: 1px solid #497B63;
+  border-right: 1px solid #497b63;
   transition: all linear 0.3s;
 }
 #mobile-menu-toggle:hover {
-  background-color: #497B63;
+  background-color: #497b63;
 }
 
 /* ─── TOP PANEL (menu content) ─── */
 .menu-top {
   flex: 1;
-  background: #0F5132;
+  background: #0f5132;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -562,8 +560,8 @@ nav {
 /* ─── BOTTOM PANEL (logo bar) ─── */
 .menu-bottom {
   height: 180px;
-  border-top: 1px solid #2C664B;
-background: linear-gradient(180deg, #0F5132 0%, #C9A227 100%);
+  border-top: 1px solid #2c664b;
+  background: linear-gradient(180deg, #0f5132 0%, #c9a227 100%);
   display: flex;
   align-items: end;
   justify-content: center;
@@ -652,7 +650,7 @@ background: linear-gradient(180deg, #0F5132 0%, #C9A227 100%);
 }
 
 .nav-col-title {
-  color: #C9A227;
+  color: #c9a227;
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
@@ -684,7 +682,7 @@ background: linear-gradient(180deg, #0F5132 0%, #C9A227 100%);
 }
 
 .nav-col ul li a:hover {
-  color: #C9A227;
+  color: #c9a227;
 }
 
 /* ─── BOTTOM LOGO ─── */
@@ -866,7 +864,7 @@ html.lenis body {
 }
 
 .financeadvice-btn-text-wipe {
-  background-image: linear-gradient(to right, #FFFFFF 50%, #004223 50%);
+  background-image: linear-gradient(to right, #ffffff 50%, #004223 50%);
   background-size: 200% 100%;
   background-position: 100% 0;
   -webkit-background-clip: text;
@@ -882,7 +880,7 @@ html.lenis body {
 }
 /* Secondary Button Text Wipe Animation */
 .financeadvice-btn-text-wipe-secondary {
-  background-image: linear-gradient(to right, #C9A227 50%, #ffffff 50%);
+  background-image: linear-gradient(to right, #c9a227 50%, #ffffff 50%);
   background-size: 200% 100%;
   background-position: 100% 0;
   -webkit-background-clip: text;
@@ -967,4 +965,19 @@ html.lenis body {
   height: 1em;
 }
 
-/*  */
+.financeadvice-faq-item {
+  overflow: hidden;
+}
+
+.financeadvice-faq-content {
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+
+.financeadvice-faq-content p {
+  margin: 0;
+}
+
+.financeadvice-icon-close img {
+  transition: transform 0.3s ease;
+}

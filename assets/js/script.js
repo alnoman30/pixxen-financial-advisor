@@ -215,20 +215,20 @@ gsap.ticker.add((time) => {
 gsap.ticker.lagSmoothing(0);
 
 // Pixxen  Financial Advisor js start
- // Financial Advisor Cards reveal JS
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.financeadvice-card-reveal');
+// Financial Advisor Cards reveal JS
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".financeadvice-card-reveal");
   if (!cards.length) return;
 
   // ---- tweak these ----
-  const STAGGER = 220;   // ms between cards revealed together
+  const STAGGER = 220; // ms between cards revealed together
   const DURATION = 1300; // ms for each card's reveal
   // ---------------------
 
   // arm the cards (so they stay visible if JS fails)
   cards.forEach((card) => {
-    card.style.setProperty('--duration', `${DURATION}ms`);
-    card.classList.add('is-ready');
+    card.style.setProperty("--duration", `${DURATION}ms`);
+    card.classList.add("is-ready");
   });
   void document.body.offsetHeight; // force reflow so the first transition plays
 
@@ -240,132 +240,137 @@ document.addEventListener('DOMContentLoaded', () => {
         .sort(
           (a, b) =>
             a.boundingClientRect.top - b.boundingClientRect.top ||
-            a.boundingClientRect.left - b.boundingClientRect.left
+            a.boundingClientRect.left - b.boundingClientRect.left,
         )
         .forEach((entry, i) => {
           const card = entry.target;
-          card.style.setProperty('--delay', `${i * STAGGER}ms`);
-          card.classList.add('is-revealed');
+          card.style.setProperty("--delay", `${i * STAGGER}ms`);
+          card.classList.add("is-revealed");
 
-          card.addEventListener('transitionend', (e) => {
-            if (e.propertyName === 'transform') card.classList.add('is-done');
+          card.addEventListener("transitionend", (e) => {
+            if (e.propertyName === "transform") card.classList.add("is-done");
           });
 
           observer.unobserve(card);
         });
     },
-    { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+    { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
   );
 
   cards.forEach((card) => observer.observe(card));
 });
 
-// 
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.financeadvice-serving-slider').forEach(function (root) {
-    const section = root.closest('section');
-    const prev = section.querySelector('.financeadvice-serving-prev');
-    const next = section.querySelector('.financeadvice-serving-next');
+// financeadvice-serving-slider
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .querySelectorAll(".financeadvice-serving-slider")
+    .forEach(function (root) {
+      const section = root.closest("section");
+      const prev = section.querySelector(".financeadvice-serving-prev");
+      const next = section.querySelector(".financeadvice-serving-next");
 
-    if (!prev || !next) {
-      console.warn('Client slider navigation buttons not found.');
-      return;
-    }
-
-    const splide = new Splide(root, {
-      type: 'loop',
-      perPage: 4.5,
-      perMove: 1,
-      gap: '1.5rem',
-      arrows: false,
-      pagination: false,
-      drag: true,
-      breakpoints: {
-        1279: { perPage: 3.5 },
-        1023: { perPage: 2.5 },
-        767: { perPage: 1.5 },
-        639: { gap: '1rem' },
-      },
-    });
-
-    prev.addEventListener('click', function (e) {
-      e.preventDefault();
-      splide.go('<');
-    });
-
-    next.addEventListener('click', function (e) {
-      e.preventDefault();
-      splide.go('>');
-    });
-
-    const lastLeft = new WeakMap();
-
-    function updateOpacity() {
-      const viewportWidth = document.documentElement.clientWidth;
-      const tolerance = 4;
-      const slides = root.querySelectorAll('.splide__slide');
-
-      // Detect a teleport: a card suddenly moving more than its own width
-      let jumped = false;
-      slides.forEach(function (slide) {
-        const r = slide.getBoundingClientRect();
-        const before = lastLeft.get(slide);
-        if (before !== undefined && r.width > 0 && Math.abs(r.left - before) > r.width) {
-          jumped = true;
-        }
-        lastLeft.set(slide, r.left);
-      });
-
-      if (jumped) root.classList.add('is-jumping');
-
-      slides.forEach(function (slide) {
-        const r = slide.getBoundingClientRect();
-        const inside =
-          r.width > 0 &&
-          r.left >= -tolerance &&
-          r.right <= viewportWidth + tolerance;
-        slide.classList.toggle('is-fully-visible', inside);
-      });
-
-      if (jumped) {
-        void root.offsetWidth; // flush styles so the change applies without animating
-        requestAnimationFrame(function () {
-          root.classList.remove('is-jumping');
-        });
+      if (!prev || !next) {
+        console.warn("Client slider navigation buttons not found.");
+        return;
       }
-    }
 
-    let rafId = null;
-    function trackMovement() {
-      cancelAnimationFrame(rafId);
-      const end = performance.now() + (splide.options.speed || 400) + 150;
+      const splide = new Splide(root, {
+        type: "loop",
+        perPage: 4.5,
+        perMove: 1,
+        gap: "1.5rem",
+        arrows: false,
+        pagination: false,
+        drag: true,
+        breakpoints: {
+          1279: { perPage: 3.5 },
+          1023: { perPage: 2.5 },
+          767: { perPage: 1.5 },
+          639: { gap: "1rem" },
+        },
+      });
 
-      (function loop() {
+      prev.addEventListener("click", function (e) {
+        e.preventDefault();
+        splide.go("<");
+      });
+
+      next.addEventListener("click", function (e) {
+        e.preventDefault();
+        splide.go(">");
+      });
+
+      const lastLeft = new WeakMap();
+
+      function updateOpacity() {
+        const viewportWidth = document.documentElement.clientWidth;
+        const tolerance = 4;
+        const slides = root.querySelectorAll(".splide__slide");
+
+        // Detect a teleport: a card suddenly moving more than its own width
+        let jumped = false;
+        slides.forEach(function (slide) {
+          const r = slide.getBoundingClientRect();
+          const before = lastLeft.get(slide);
+          if (
+            before !== undefined &&
+            r.width > 0 &&
+            Math.abs(r.left - before) > r.width
+          ) {
+            jumped = true;
+          }
+          lastLeft.set(slide, r.left);
+        });
+
+        if (jumped) root.classList.add("is-jumping");
+
+        slides.forEach(function (slide) {
+          const r = slide.getBoundingClientRect();
+          const inside =
+            r.width > 0 &&
+            r.left >= -tolerance &&
+            r.right <= viewportWidth + tolerance;
+          slide.classList.toggle("is-fully-visible", inside);
+        });
+
+        if (jumped) {
+          void root.offsetWidth; // flush styles so the change applies without animating
+          requestAnimationFrame(function () {
+            root.classList.remove("is-jumping");
+          });
+        }
+      }
+
+      let rafId = null;
+      function trackMovement() {
+        cancelAnimationFrame(rafId);
+        const end = performance.now() + (splide.options.speed || 400) + 150;
+
+        (function loop() {
+          updateOpacity();
+          if (performance.now() < end) rafId = requestAnimationFrame(loop);
+        })();
+      }
+
+      function settle() {
         updateOpacity();
-        if (performance.now() < end) rafId = requestAnimationFrame(loop);
-      })();
-    }
+        requestAnimationFrame(updateOpacity);
+        setTimeout(updateOpacity, 150);
+        setTimeout(updateOpacity, 500);
+      }
 
-    function settle() {
-      updateOpacity();
-      requestAnimationFrame(updateOpacity);
-      setTimeout(updateOpacity, 150);
-      setTimeout(updateOpacity, 500);
-    }
+      splide.on("mounted resized refresh", settle);
+      splide.on("move", trackMovement);
+      splide.on("dragging scrolling moved dragged", updateOpacity);
 
-    splide.on('mounted resized refresh', settle);
-    splide.on('move', trackMovement);
-    splide.on('dragging scrolling moved dragged', updateOpacity);
+      splide.mount();
 
-    splide.mount();
-
-    window.addEventListener('load', settle);
-    window.addEventListener('resize', updateOpacity);
-  });
+      window.addEventListener("load", settle);
+      window.addEventListener("resize", updateOpacity);
+    });
 });
 
-// 
-// Pool counter JS
+// Financial advisor counter JS
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -458,186 +463,207 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// 
-/**
- * Finance Advisor hero – GSAP + ScrollTrigger
- * Load before this file:
- * <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
- * <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
- * Buttons are intentionally not animated.
- */
-/**
- * Finance Advisor hero – GSAP + ScrollTrigger
- * Load before this file:
- * <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
- * <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
- * Buttons are intentionally not animated.
- */
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+// Finance Advisor hero – GSAP + ScrollTrigger
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
   gsap.registerPlugin(ScrollTrigger);
 
   // Split text into words, each inside a clipping mask (same reveal as the section headings)
   function splitWords(el) {
-    const text = el.textContent.trim().replace(/\s+/g, ' ');
-    el.setAttribute('aria-label', text);
-    el.innerHTML = '';
+    const text = el.textContent.trim().replace(/\s+/g, " ");
+    el.setAttribute("aria-label", text);
+    el.innerHTML = "";
 
-    return text.split(' ').map((word, i, arr) => {
-      const mask = document.createElement('span');
-      mask.setAttribute('aria-hidden', 'true');
+    return text.split(" ").map((word, i, arr) => {
+      const mask = document.createElement("span");
+      mask.setAttribute("aria-hidden", "true");
       mask.style.cssText =
-        'display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:0.08em;';
+        "display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:0.08em;";
 
-      const inner = document.createElement('span');
-      inner.style.cssText = 'display:inline-block;will-change:transform;';
+      const inner = document.createElement("span");
+      inner.style.cssText = "display:inline-block;will-change:transform;";
       inner.textContent = word;
 
       mask.appendChild(inner);
       el.appendChild(mask);
-      if (i < arr.length - 1) el.appendChild(document.createTextNode(' '));
+      if (i < arr.length - 1) el.appendChild(document.createTextNode(" "));
       return inner;
     });
   }
 
   const mm = gsap.matchMedia();
 
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
-    const titleEl = document.querySelector('.financeadvice-hero-title');
-    const subtitleEl = document.querySelector('.financeadvice-hero-subtitle');
+  mm.add("(prefers-reduced-motion: no-preference)", () => {
+    const titleEl = document.querySelector(".financeadvice-hero-title");
+    const subtitleEl = document.querySelector(".financeadvice-hero-subtitle");
     const titleWords = titleEl ? splitWords(titleEl) : [];
     const subtitleWords = subtitleEl ? splitWords(subtitleEl) : [];
 
-    const img = document.querySelector('.financeadvice-hero-img');
-    const section = document.querySelector('.financeadvice-hero-title')?.closest('section');
-    const checkIcons = gsap.utils.toArray('.financeadvice-hero-checklists img');
+    const img = document.querySelector(".financeadvice-hero-img");
+    const section = document
+      .querySelector(".financeadvice-hero-title")
+      ?.closest("section");
+    const checkIcons = gsap.utils.toArray(".financeadvice-hero-checklists img");
 
     // Price count-up: wrap the number so only it animates
-    const priceEl = document.querySelector('.financeadvice-hero-pricebox p');
+    const priceEl = document.querySelector(".financeadvice-hero-pricebox p");
     let priceNum = null;
     let priceTarget = 0;
     if (priceEl) {
       priceEl.innerHTML = priceEl.textContent.replace(
         /(\d[\d,]*)/,
-        '<span class="fa-price-num" style="font-variant-numeric:tabular-nums">$1</span>'
+        '<span class="fa-price-num" style="font-variant-numeric:tabular-nums">$1</span>',
       );
-      priceNum = priceEl.querySelector('.fa-price-num');
-      priceTarget = parseInt(priceNum.textContent.replace(/,/g, ''), 10);
+      priceNum = priceEl.querySelector(".fa-price-num");
+      priceTarget = parseInt(priceNum.textContent.replace(/,/g, ""), 10);
     }
     const counter = { val: priceTarget };
 
     const heroTl = gsap.timeline({
       scrollTrigger: {
-        trigger: '.financeadvice-hero-title',
-        start: 'top 85%',
-        toggleActions: 'play none none none', // play once; use 'play none none reverse' to replay
-        once: true
+        trigger: ".financeadvice-hero-title",
+        start: "top 85%",
+        toggleActions: "play none none none", // play once; use 'play none none reverse' to replay
+        once: true,
       },
       defaults: {
-        ease: 'power3.out',
-        duration: 0.8
-      }
+        ease: "power3.out",
+        duration: 0.8,
+      },
     });
 
     heroTl
-      .from(titleWords, { yPercent: 110, rotate: 3, duration: 0.9, stagger: 0.07 }, 0)
-      .from(subtitleWords, { yPercent: 110, rotate: 3, duration: 0.9, stagger: 0.05 }, '-=0.5')
-      .from('.financeadvice-hero-desc', { y: 30, opacity: 0 }, '-=0.5')
-      .from('.financeadvice-hero-pricebox', { y: 20, opacity: 0 }, '-=0.3')
       .from(
-        '.financeadvice-hero-divider',
-        { scaleX: 0, transformOrigin: 'left center', duration: 0.6, ease: 'power2.inOut' },
-        '-=0.4'
+        titleWords,
+        { yPercent: 110, rotate: 3, duration: 0.9, stagger: 0.07 },
+        0,
       )
-      .from('.financeadvice-hero-checklists li', { x: -20, opacity: 0, stagger: 0.1 }, '-=0.3')
+      .from(
+        subtitleWords,
+        { yPercent: 110, rotate: 3, duration: 0.9, stagger: 0.05 },
+        "-=0.5",
+      )
+      .from(".financeadvice-hero-desc", { y: 30, opacity: 0 }, "-=0.5")
+      .from(".financeadvice-hero-pricebox", { y: 20, opacity: 0 }, "-=0.3")
+      .from(
+        ".financeadvice-hero-divider",
+        {
+          scaleX: 0,
+          transformOrigin: "left center",
+          duration: 0.6,
+          ease: "power2.inOut",
+        },
+        "-=0.4",
+      )
+      .from(
+        ".financeadvice-hero-checklists li",
+        { x: -20, opacity: 0, stagger: 0.1 },
+        "-=0.3",
+      )
       .from(
         checkIcons,
-        { scale: 0, rotate: -90, duration: 0.5, stagger: 0.1, ease: 'back.out(2)' },
-        '<'
+        {
+          scale: 0,
+          rotate: -90,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "back.out(2)",
+        },
+        "<",
       )
       // Starts at 0 so it fires together with the title
       .from(
-        '.financeadvice-hero-img',
-        { scale: 0.92, y: 30, opacity: 0, duration: 0.9, ease: 'power3.out' },
-        0
+        ".financeadvice-hero-img",
+        { scale: 0.92, y: 30, opacity: 0, duration: 0.9, ease: "power3.out" },
+        0,
       );
 
     if (priceNum) {
       gsap.set(counter, { val: 0 });
-      priceNum.textContent = '0';
+      priceNum.textContent = "0";
       heroTl.to(
         counter,
         {
           val: priceTarget,
           duration: 1.2,
-          ease: 'power2.out',
+          ease: "power2.out",
           onUpdate: () => {
-            priceNum.textContent = Math.round(counter.val).toLocaleString('en-US');
-          }
+            priceNum.textContent = Math.round(counter.val).toLocaleString(
+              "en-US",
+            );
+          },
         },
-        '-=1.6'
+        "-=1.6",
       );
     }
 
     // Idle float once the intro finishes
     heroTl.add(() => {
       if (!img) return;
-      gsap.to(img, { y: -10, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      gsap.to(img, {
+        y: -10,
+        duration: 3,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
     });
 
     // Light scroll parallax on the mockup
     if (img && section) {
       gsap.to(img, {
         yPercent: -4,
-        ease: 'none',
+        ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 0.6
-        }
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.6,
+        },
       });
     }
   });
 });
 
-// 
+//
 /**
  * Heading reveal – GSAP + ScrollTrigger
  */
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
   gsap.registerPlugin(ScrollTrigger);
 
-  const headings = gsap.utils.toArray('.financeadvice-heading-reveal');
+  const headings = gsap.utils.toArray(".financeadvice-heading-reveal");
   if (!headings.length) return;
 
   // Split heading text into words, each inside a clipping mask
   function splitWords(el) {
-    const text = el.textContent.trim().replace(/\s+/g, ' ');
-    el.setAttribute('aria-label', text);
-    el.innerHTML = '';
+    const text = el.textContent.trim().replace(/\s+/g, " ");
+    el.setAttribute("aria-label", text);
+    el.innerHTML = "";
 
-    return text.split(' ').map((word, i, arr) => {
-      const mask = document.createElement('span');
-      mask.setAttribute('aria-hidden', 'true');
+    return text.split(" ").map((word, i, arr) => {
+      const mask = document.createElement("span");
+      mask.setAttribute("aria-hidden", "true");
       mask.style.cssText =
-        'display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:0.08em;';
+        "display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:0.08em;";
 
-      const inner = document.createElement('span');
-      inner.style.cssText = 'display:inline-block;will-change:transform;';
+      const inner = document.createElement("span");
+      inner.style.cssText = "display:inline-block;will-change:transform;";
       inner.textContent = word;
 
       mask.appendChild(inner);
       el.appendChild(mask);
-      if (i < arr.length - 1) el.appendChild(document.createTextNode(' '));
+      if (i < arr.length - 1) el.appendChild(document.createTextNode(" "));
       return inner;
     });
   }
 
   const mm = gsap.matchMedia();
 
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
+  mm.add("(prefers-reduced-motion: no-preference)", () => {
     headings.forEach((heading) => {
       const words = splitWords(heading);
 
@@ -648,21 +674,83 @@ document.addEventListener('DOMContentLoaded', () => {
           yPercent: 0,
           rotate: 0,
           duration: 0.9,
-          ease: 'power3.out',
+          ease: "power3.out",
           stagger: 0.07,
           scrollTrigger: {
             trigger: heading,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-            once: true
-          }
-        }
+            start: "top 85%",
+            toggleActions: "play none none none",
+            once: true,
+          },
+        },
       );
     });
 
     // Re-measure after fonts load so trigger positions are accurate
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => ScrollTrigger.refresh());
+    }
+  });
+});
+
+//
+// Financial advisor FAQ section
+document.addEventListener("DOMContentLoaded", function () {
+  const faqItems = document.querySelectorAll(".financeadvice-faq-item");
+
+  function closeItem(item) {
+    const trigger = item.querySelector(".financeadvice-faq-trigger");
+    const content = item.querySelector(".financeadvice-faq-content");
+    const icon = item.querySelector(".financeadvice-icon-close img");
+
+    item.classList.remove("active");
+    content.style.maxHeight = "0px";
+    trigger.setAttribute("aria-expanded", "false");
+    if (icon) icon.style.transform = "rotate(0deg)";
+  }
+
+  function openItem(item) {
+    const trigger = item.querySelector(".financeadvice-faq-trigger");
+    const content = item.querySelector(".financeadvice-faq-content");
+    const icon = item.querySelector(".financeadvice-icon-close img");
+
+    item.classList.add("active");
+    content.style.maxHeight = content.scrollHeight + "px";
+    trigger.setAttribute("aria-expanded", "true");
+    if (icon) icon.style.transform = "rotate(45deg)";
+  }
+
+  faqItems.forEach(function (item) {
+    const trigger = item.querySelector(".financeadvice-faq-trigger");
+
+    function toggle() {
+      const isOpen = item.classList.contains("active");
+
+      // Close all FAQs
+      faqItems.forEach(closeItem);
+
+      // Open clicked FAQ
+      if (!isOpen) openItem(item);
+    }
+
+    trigger.addEventListener("click", toggle);
+
+    // keyboard support, since the trigger is a div with role="button"
+    trigger.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+
+  // keep the open item's height correct when the screen is resized
+  window.addEventListener("resize", function () {
+    const openContent = document.querySelector(
+      ".financeadvice-faq-item.active .financeadvice-faq-content",
+    );
+    if (openContent) {
+      openContent.style.maxHeight = openContent.scrollHeight + "px";
     }
   });
 });
